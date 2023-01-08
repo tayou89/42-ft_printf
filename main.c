@@ -6,35 +6,25 @@
 /*   By: tayou <tayou@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 22:53:01 by tayou             #+#    #+#             */
-/*   Updated: 2023/01/08 00:43:48 by tayou            ###   ########.fr       */
+/*   Updated: 2023/01/08 21:56:01 by tayou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-/*
-int	main()
+#include "ft_printf.h"
+
+int	main(void)
 {
 	char	*name;
 	int		age;
-	int		number_of_kids;
+	int		return_ft_printf;
+	int		return_printf;
 
-	name = "Taegab You";
+	name = "유태갑";
 	age = 35;
-	number_of_kids = 2;
-
-	printf("My name is %s. I'm %d years old. I have %d kids.\n", name, age, number_of_kids);
-
-	return (0);
-}
-*/
-
-int	main()
-{
-	char	*name;
-
-	name = "Taegab You";
-
-	printf("%p\n", name);
-
+	return_ft_printf = ft_printf("내 이름은 %s이고 나이는 %d입니다.\n", name, age);
+	return_printf = printf("내 이름은 %s이고 나이는 %d입니다.\n", name, age);
+	printf("return_ft_printf: %d\n", return_ft_printf);
+	printf("return_printf: %d\n", return_printf);
 	return (0);
 }

@@ -5,45 +5,34 @@ RM = rm
 RMFLAGS = -f
 AR = ar
 ARFLAGS = rcs
-SRCS_PART1 = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
-			 ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c ft_strlen.c ft_strncmp.c \
-			 ft_memset.c ft_bzero.c ft_memchr.c ft_memcpy.c ft_memcmp.c ft_memmove.c \
-			 ft_strlcpy.c ft_strnstr.c ft_strlcat.c ft_atoi.c \
-			 ft_calloc.c ft_strdup.c
-SRCS_PART2 = ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c \
-			 ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c \
-			 ft_putendl_fd.c ft_putnbr_fd.c
-SRCS_BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
-			 ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c \
-			 ft_lstiter.c ft_lstmap.c
-OBJS_PART1 = $(SRCS_PART1:.c=.o)
-OBJS_PART2 = $(SRCS_PART2:.c=.o)
-OBJS_BONUS = $(SRCS_BONUS:.c=.o)
+LIBFT = ./libft/libft.a
+LIBFT_DIR = ./libft
+SRCS = ft_printf.c \
+	   check_if_cspdi.c print_address_hexa.c \
+	   check_if_others.c ft_itoa_unsigned.c get_hexa_digit.c fill_str_hexa.c
+OBJS = $(SRCS:.c=.o)
 
-ifdef WITH_BONUS
-	TOTAL_OBJS = $(OBJS_PART1) $(OBJS_PART2) $(OBJS_BONUS)
-else
-	TOTAL_OBJS = $(OBJS_PART1) $(OBJS_PART2)
-endif
-
-all : $(NAME)
-	sleep 1
+all : 
+	make $(NAME) 
 
 clean : 
-	$(RM) $(RMFLAGS) $(OBJS_PART1) $(OBJS_PART2) $(OBJS_BONUS)
+	make -C $(LIBFT_DIR) clean
+	$(RM) $(RMFLAGS) $(OBJS)
 
 fclean : clean
+	make -C $(LIBFT_DIR) fclean
 	$(RM) $(RMFLAGS) $(NAME)
 
 re : fclean all
 
-bonus :
-	make WITH_BONUS=1
+$(NAME) : $(LIBFT) $(OBJS)
+	cp $(LIBFT) $(NAME)
+	$(AR) $(ARFLAGS) -o $@ $^
 
-$(NAME) : $(TOTAL_OBJS)
-	$(AR) $(ARFLAGS) $@ $^
+$(LIBFT) :
+	make -C $(LIBFT_DIR) all
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 .PHONY: all clean fclean re bonus

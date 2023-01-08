@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   get_hexa_digit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tayou <tayou@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/07 22:42:39 by tayou             #+#    #+#             */
-/*   Updated: 2023/01/08 22:02:57 by tayou            ###   ########.fr       */
+/*   Created: 2023/01/08 18:10:33 by tayou             #+#    #+#             */
+/*   Updated: 2023/01/08 18:25:37 by tayou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *str, ...)
+int	get_hexa_digit(unsigned int number)
 {
-	va_list	ap;
-	int		print_count;
-	int		i;
+	int	digit;
 
-	print_count = 0;
-	va_start(ap, str);
-	i = 0;
-	while (str[i] != '\0')
+	digit = 0;
+	if (number == 0)
+		digit = 1;
+	while (number != 0)
 	{
-		if (str[i] != '%')
-		{
-			write(1, &str[i], 1);
-			print_count++;
-		}
-		else if (str[i] == '%')
-		{
-			print_count = check_if_cspdi(str[i + 1], ap, print_count);
-			print_count = check_if_others(str[i + 1], ap, print_count);
-			i++;
-		}
-		i++;
+		number /= 16;
+		digit++;
 	}
-	return (print_count);
+	return (digit);
 }
