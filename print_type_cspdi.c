@@ -6,7 +6,7 @@
 /*   By: tayou <tayou@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:01:30 by tayou             #+#    #+#             */
-/*   Updated: 2023/01/15 20:02:23 by tayou            ###   ########.fr       */
+/*   Updated: 2023/01/15 21:01:08 by tayou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_if_cspdi(char c, va_list ap, int print_count)
 	else if (c == 's')
 	{
 		str = va_arg(ap, char *);
-		print_count = (int) write(1, str, ft_strlen(str));
+		print_count += (int) write(1, str, ft_strlen(str));
 	}
 	else if (c == 'p')
 	{
