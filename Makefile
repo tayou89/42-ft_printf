@@ -2,9 +2,9 @@ NAME = libftprintf.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm
-RMFLAGS = -f
+RMFLAGS = -rf
 AR = ar
-ARFLAGS = rcs
+ARFLAGS = -rcs
 LIBFT = ./libft/libft.a
 LIBFT_DIR = ./libft
 SRCS = ft_printf.c \
@@ -27,7 +27,7 @@ re : fclean all
 
 $(NAME) : $(LIBFT) $(OBJS)
 	cp $(LIBFT) $(NAME)
-	$(AR) $(ARFLAGS) -o $@ $^
+	$(AR) $(ARFLAGS) $@ $^
 
 $(LIBFT) :
 	make -C $(LIBFT_DIR) all
@@ -35,4 +35,4 @@ $(LIBFT) :
 %.o : %.c
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re bonus libft
