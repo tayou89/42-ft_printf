@@ -6,7 +6,7 @@
 /*   By: tayou <tayou@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 22:43:52 by tayou             #+#    #+#             */
-/*   Updated: 2023/01/15 21:02:32 by tayou            ###   ########.fr       */
+/*   Updated: 2023/01/21 17:51:01 by tayou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 
 # include <stdarg.h>
 # include <unistd.h>
-# include "../libft/libft.h"
+# include "./libft/libft.h"
 
 int		ft_printf(const char *str, ...);
 
-int		check_if_cspdi(char c, va_list ap, int print_count);
-void	print_address_hexa(void *address, int *print_count);
+int		my_strlen(const char *str);
 
-int		check_if_others(char c, va_list ap, int print_count);
-char	*ft_itoa_unsigned(unsigned int number);
-int		get_hexa_digit(unsigned int number);
-char	*fill_str_hexa(char *str, unsigned int number, int digit, char c);
+void	ft_print_character(char c, int *print_count);
+void	ft_print_string(char *str, int *print_count);
+void	ft_print_address(void *address, int *print_count);
+void	ft_print_decimal(int n, int *print_count);
+void	ft_print_unsigned(unsigned int number, int *print_count);
+void	ft_print_hexa(char character, unsigned int number, int *print_count);
+void	ft_print_percent(int *print_count);
 
 #endif

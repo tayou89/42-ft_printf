@@ -1,58 +1,60 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa_unsigned.c                                 :+:      :+:    :+:   */
+/*   print_unsigned_number.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tayou <tayou@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/08 19:08:45 by tayou             #+#    #+#             */
-/*   Updated: 2023/01/08 21:25:36 by tayou            ###   ########.fr       */
+/*   Created: 2023/01/21 14:45:44 by tayou             #+#    #+#             */
+/*   Updated: 2023/01/21 15:07:21 by tayou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	get_size(unsigned int number)
+static int	get_digit(unsigned int number)
 {
-	int	i;
+	int	digit;
 
+	digit = 0;
 	if (number == 0)
 		return (1);
-	i = 0;
 	while (number != 0)
 	{
 		number /= 10;
-		i++;
+		digit++;
 	}
-	return (i);
+	return (digit);
 }
 
-char	*fill_array(char *string, unsigned int number, int digit)
+static char	*fill_number_array(char *array, unsigned int number, int digit)
 {
 	int	i;
 
 	if (number == 0)
-		string[0] = '0';
-	i = digit;
+		array[0] = '0';
+	i = digit - 1;
 	while (number != 0)
 	{
-		string[i - 1] = number % 10 + '0';
+		array[i] = number % 10 + '0';
 		number /= 10;
 		i--;
 	}
-	string[digit] = '\0';
-	return (string);
+	array[digit] = '\0';
+	return (array);
 }
 
-char	*ft_itoa_unsigned(unsigned int number)
+void	ft_print_unsigned(unsigned int number, int *print_count)
 {
-	char		*string;
-	int			digit;
+	char	*array;
+	int		digit;
 
-	digit = get_size(number);
-	string = (char *) malloc(sizeof(char) * digit + 1);
-	if (string == 0)
-		return (0);
-	string = fill_array(string, number, digit);
-	return (string);
+	digit = get_digit(number);
+	array = (char *) malloc(sizeof(char) * digit + 1);
+	if (array == 0)
+		return ;
+	array = fill_number_array(array, number, digit);
+	write(1, array, digit);
+	(*print_count) += digit;
+	free(array);
 }

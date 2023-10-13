@@ -5,21 +5,39 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tayou <tayou@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/07 22:42:39 by tayou             #+#    #+#             */
-/*   Updated: 2023/01/15 19:59:28 by tayou            ###   ########.fr       */
+/*   Created: 2023/01/15 20:09:50 by tayou             #+#    #+#             */
+/*   Updated: 2023/01/21 17:53:05 by tayou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+void	check_type(va_list ap, char character, int *print_count)
+{
+	if (character == 'c')
+		ft_print_character(va_arg(ap, int), print_count);
+	else if (character == 's')
+		ft_print_string(va_arg(ap, char *), print_count);
+	else if (character == 'p')
+		ft_print_address(va_arg(ap, void *), print_count);
+	else if (character == 'd' || character == 'i')
+		ft_print_decimal(va_arg(ap, int), print_count);
+	else if (character == 'u')
+		ft_print_unsigned(va_arg(ap, unsigned int), print_count);
+	else if (character == 'x' || character == 'X')
+		ft_print_hexa(character, va_arg(ap, unsigned int), print_count);
+	else if (character == '%')
+		ft_print_percent(print_count);
+}
+
 int	ft_printf(const char *str, ...)
 {
-	va_list	ap;
 	int		print_count;
+	va_list	ap;
 	int		i;
 
-	print_count = 0;
 	va_start(ap, str);
+	print_count = 0;
 	i = 0;
 	while (str[i] != '\0')
 	{
@@ -27,14 +45,13 @@ int	ft_printf(const char *str, ...)
 		{
 			write(1, &str[i], 1);
 			print_count++;
+			i++;
 		}
 		else if (str[i] == '%')
 		{
-			print_count = print_type_cspdi(str[i + 1], ap, print_count);
-			print_count = print_type_others(str[i + 1], ap, print_count);
-			i++;
+			check_type(ap, str[i + 1], &print_count);
+			i += 2;
 		}
-		i++;
-	}
+	}	
 	return (print_count);
 }

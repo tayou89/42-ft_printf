@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_hexa_digit.c                                   :+:      :+:    :+:   */
+/*   ft_print_percent.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tayou <tayou@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/08 18:10:33 by tayou             #+#    #+#             */
-/*   Updated: 2023/01/08 18:25:37 by tayou            ###   ########.fr       */
+/*   Created: 2023/01/21 16:51:44 by tayou             #+#    #+#             */
+/*   Updated: 2023/01/21 16:51:55 by tayou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	get_hexa_digit(unsigned int number)
+void	ft_print_percent(int *print_count)
 {
-	int	digit;
-
-	digit = 0;
-	if (number == 0)
-		digit = 1;
-	while (number != 0)
-	{
-		number /= 16;
-		digit++;
-	}
-	return (digit);
+	write(1, "%", 1);
+	(*print_count)++;
 }
