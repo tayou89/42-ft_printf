@@ -2,47 +2,83 @@ NAME = libft.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm
-RMFLAGS = -f
+RMFLAGS = -rf
 AR = ar
 ARFLAGS = rcs
-SRCS_PART1 = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
-			 ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c ft_strlen.c ft_strncmp.c \
-			 ft_memset.c ft_bzero.c ft_memchr.c ft_memcpy.c ft_memcmp.c ft_memmove.c \
-			 ft_strlcpy.c ft_strnstr.c ft_strlcat.c ft_atoi.c \
-			 ft_calloc.c ft_strdup.c
-SRCS_PART2 = ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c \
-			 ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c \
-			 ft_putendl_fd.c ft_putnbr_fd.c
-SRCS_BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
-			 ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c \
-			 ft_lstiter.c ft_lstmap.c
-OBJS_PART1 = $(SRCS_PART1:.c=.o)
-OBJS_PART2 = $(SRCS_PART2:.c=.o)
-OBJS_BONUS = $(SRCS_BONUS:.c=.o)
+
+# Source Paths
+SOURCE_PATH = source
+SOURCE_MENDATORY_PATH = $(SOURCE_PATH)/mendatory
+SOURCE_PART1_PATH = $(SOURCE_MENDATORY_PATH)/part_1
+SOURCE_PART2_PATH = $(SOURCE_MENDATORY_PATH)/part_2
+SOURCE_BONUS_PATH = $(SOURCE_PATH)/bonus
+
+# Object Paths
+OBJECT_PATH = object
+OBJECT_MENDATORY_PATH = $(OBJECT_PATH)/mendatory
+OBJECT_PART1_PATH = $(OBJECT_MENDATORY_PATH)/part_1
+OBJECT_PART2_PATH = $(OBJECT_MENDATORY_PATH)/part_2
+OBJECT_BONUS_PATH = $(OBJECT_PATH)/bonus
+
+# Include Path
+INCLUDE_PATH = include
+
+# File Names
+PART1_FILE_NAMES = ft_isalpha ft_isdigit ft_isalnum \
+				   ft_isascii ft_isprint ft_toupper \
+				   ft_tolower ft_strchr ft_strrchr \
+				   ft_strlen ft_strncmp ft_memset \
+				   ft_bzero ft_memchr ft_memcpy \
+				   ft_memcmp ft_memmove ft_strlcpy \
+				   ft_strnstr ft_strlcat ft_atoi \
+				   ft_calloc ft_strdup
+
+PART2_FILE_NAMES = ft_substr ft_strjoin ft_strtrim \
+				   ft_split ft_itoa ft_strmapi \
+				   ft_striteri ft_putchar_fd ft_putstr_fd \
+				   ft_putendl_fd ft_putnbr_fd
+
+BONUS_FILE_NAMES = ft_lstnew ft_lstadd_front ft_lstsize \
+				   ft_lstlast ft_lstadd_back ft_lstdelone \
+				   ft_lstclear ft_lstiter ft_lstmap
+
+# Source Files
+SOURCE_PART1 = $(addprefix $(SOURCE_PART1_PATH)/, $(addsuffix .c, $(PART1_FILE_NAMES)))
+SOURCE_PART2 = $(addprefix $(SOURCE_PART2_PATH)/, $(addsuffix .c, $(PART2_FILE_NAMES)))
+SOURCE_MEDATORY = $(SOURCE_PART1) $(SOURCE_PART2)
+SOURCE_BONUS = $(addprefix $(SOURCE_BONUS_PATH)/, $(addsuffix .c, $(BONUS_FILE_NAMES)))
+
+# Object Files
+OBJECT_PART1 = $(addprefix $(OBJECT_PART1_PATH)/, $(addsuffix .o, $(PART1_FILE_NAMES)))
+OBJECT_PART2 = $(addprefix $(OBJECT_PART2_PATH)/, $(addsuffix .o, $(PART2_FILE_NAMES)))
+OBJECT_MENDATORY = $(OBJECT_PART1) $(OBJECT_PART2)
+OBJECT_BONUS = $(addprefix $(OBJECT_BONUS_PATH)/, $(addsuffix .o, $(BONUS_FILE_NAMES)))
 
 ifdef WITH_BONUS
-	TOTAL_OBJS = $(OBJS_PART1) $(OBJS_PART2) $(OBJS_BONUS)
+	TOTAL_OBJECTS = $(OBJECT_MENDATORY) $(OBJECT_BONUS)
 else
-	TOTAL_OBJS = $(OBJS_PART1) $(OBJS_PART2)
+	TOTAL_OBJECTS = $(OBJECT_MENDATORY)
 endif
 
-all : $(NAME)
+all: $(NAME)
 
-clean : 
-	$(RM) $(RMFLAGS) $(OBJS_PART1) $(OBJS_PART2) $(OBJS_BONUS)
-
-fclean : clean
-	$(RM) $(RMFLAGS) $(NAME)
-
-re : fclean all
-
-bonus :
-	make WITH_BONUS=1
-
-$(NAME) : $(TOTAL_OBJS)
+$(NAME): $(TOTAL_OBJECTS)
 	$(AR) $(ARFLAGS) $@ $^
 
-%.o : %.c
-	$(CC) $(CFLAGS) -c $<
+clean: 
+	$(RM) $(RMFLAGS) $(TOTAL_OBJECTS)
+	$(RM) $(RMFLAGS) $(OBJECT_PATH)
+
+fclean: clean
+	$(RM) $(RMFLAGS) $(NAME)
+
+re: fclean all
+
+bonus:
+	make WITH_BONUS=1 all
+
+$(OBJECT_PATH)/%.o: $(SOURCE_PATH)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -I$(INCLUDE_PATH)/ -c $< -o $@
 
 .PHONY: all clean fclean re bonus
