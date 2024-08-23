@@ -13,7 +13,7 @@ LIBFT = ./libft/libft.a
 
 # Path
 LIBFT_PATH = libft
-SORUCE_PATH = sources
+SOURCE_PATH = sources
 OBJECT_PATH = objects
 HEADER_PATH = headers
 
@@ -32,7 +32,7 @@ SOURCE_FILES = $(addprefix $(SOURCE_PATH)/, $(SOURCES))
 
 # Objects
 OBJECTS = $(SOURCES:.c=.o)
-OBJECT_FILES = $(addprefix $(OBJECTS_PATH)/, $(OBJECTS))
+OBJECT_FILES = $(addprefix $(OBJECT_PATH)/, $(OBJECTS))
 
 all : 
 	make $(NAME) 
