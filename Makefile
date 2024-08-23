@@ -32,14 +32,18 @@ SOURCE_FILES = $(addprefix $(SOURCE_PATH)/, $(SOURCES))
 
 # Objects
 OBJECTS = $(SOURCES:.c=.o)
-OBJECTS_FILES = $(addprefix $(OBJECTS_PATH)/, $(OBJECTS))
+OBJECT_FILES = $(addprefix $(OBJECTS_PATH)/, $(OBJECTS))
 
 all : 
 	make $(NAME) 
 
+$(NAME) : $(LIBFT) $(OBJECT_FILES)
+	cp $(LIBFT) $(NAME)
+	$(AR) $(ARFLAGS) $@ $^
+
 clean : 
 	make -C $(LIBFT_PATH) clean
-	$(RM) $(RMFLAGS) $(OBJS)
+	$(RM) $(RMFLAGS) $(OBJECT_PATH)
 
 fclean : clean
 	make -C $(LIBFT_PATH) fclean
@@ -47,15 +51,12 @@ fclean : clean
 
 re : fclean all
 
-$(NAME) : $(LIBFT) $(OBJS)
-	cp $(LIBFT) $(NAME)
-	$(AR) $(ARFLAGS) $@ $^
 
 $(LIBFT) :
 	make -C $(LIBFT_PATH) all
 
 $(OBJECT_PATH)/%.o : $(SOURCE_PATH)/%.c
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -I$(INCLUDE_PATH)/ -o $@ -c $<
+	$(CC) $(CFLAGS) -I$(HEADER_PATH)/ -o $@ -c $<
 
 .PHONY: all clean fclean re bonus libft
