@@ -1,16 +1,61 @@
-# Introduction
-- This project is one of 42 Seoul subjects.
-- The purpose of this project is to upgrade libft library which 'ft_printf' function is added.
-- The source code for ft_printf is written by C.
-- ft_printf function operates almost identically to the actual 'printf' function in C.
-- ft_printf is implemented in accordance with requirements, [ft_print PDF](requirements/ft_printf.pdf) and [Norminette](requirements/nominette.pdf).
+# ft_printf
 
-# Usage
-1. `git clone https://github.com/tayou89/ft_printf.git`
-2. Move to the cloned directory (ex.`cd ft_print` for mac terminal)
-3. Execute `make` to generate an archived library file, `libftprintf.a`.
-4. Use `libftprintf.a` to other project if you need. (compile it togeter)
+## Description
+This project involves recoding the printf() function from libc. The function ft_printf() will mimic the original printf().
 
-# Applied Concept for Implemenation
-- variadic variables
-- va_list in stdarg.h
+## Norminette
+This project adheres to the 42 school's coding standard enforced by the Norminette tool. For detailed rules, refer to the Norm PDF in the project resources.
+
+## Function Prototype
+```c
+int ft_printf(const char *, ...);
+```
+
+## Supported Conversions
+- `%c`: Prints a single character.
+- `%s`: Prints a string.
+- `%p`: Prints a pointer in hexadecimal format.
+- `%d`: Prints a decimal (base 10) number.
+- `%i`: Prints an integer in base 10.
+- `%u`: Prints an unsigned decimal (base 10) number.
+- `%x`: Prints a number in hexadecimal (base 16) lowercase format.
+- `%X`: Prints a number in hexadecimal (base 16) uppercase format.
+- `%%`: Prints a percent sign.
+
+## Makefile
+The project includes a Makefile with the following rules:
+- `make`: Compiles the project and generates the libftprintf.a library.
+- `make clean`: Removes object files.
+- `make fclean`: Removes object files and the libftprintf.a library.
+- `make re`: Performs a full recompilation.
+
+## Usage
+1. Compile the library:
+   ```
+   make
+   ```
+
+2. Include the header in your C file:
+   ```c
+   #include "ft_printf.h"
+   ```
+
+3. Compile your project with libftprintf.a:
+   ```
+   gcc your_c_file.c libftprintf.a -o your_program
+   ```
+
+## Example
+```c
+#include "ft_printf.h"
+
+int main()
+{
+    ft_printf("Hello, %s! The answer is %d.\n", "world", 42);
+    return 0;
+}
+```
+
+## Notes
+- The buffer management of the original printf() is not implemented.
+- The library file libftprintf.a is created at the root of the repository.
