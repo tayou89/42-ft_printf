@@ -4,7 +4,7 @@
 This project involves recoding the printf() function from libc. The function ft_printf() will mimic the original printf().
 
 ## Norminette
-This project adheres to the 42 school's coding standard enforced by the Norminette tool. For detailed rules, refer to the Norm PDF in the project resources.
+This project adheres to the 42 school's coding standard enforced by the Norminette tool. For detailed rules, refer to [the Norm PDF](requirements/nominette.pdf) in the project resources.
 
 ## Function Prototype
 ```c
